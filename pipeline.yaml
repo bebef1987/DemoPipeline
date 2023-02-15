@@ -30,7 +30,7 @@ pipeline {
                  powershell(". '.UipathAnalize.ps1'") 
              }
          }
-         
+                  */
 
          stage('Test code') {
             when {
@@ -52,17 +52,15 @@ pipeline {
                  }
              }
          }
-         */
+
         stage('Build code for Process') {
+            when {
+                equals expected : 'True', actual: TestsRunSuccessfully
+            }
              steps {
                  echo 'UiPathPack'
                  echo PROCESS_OUTPUT_PATH
-                  /*withEnv(["PROCESS_OUTPUT_PATH=$PROCESS_OUTPUT_PATH"]) {
-                     powershell '''
-                     ./.pipeline/UiPathPack.ps1 "$env:WORKSPACE\\project.json" -destination_folder $env:PROCESS_OUTPUT_PATH -autoVersion -outputType Process -libraryOrchestratorAccountForApp myorggxpsdbv -libraryOrchestratorApplicationId  4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -libraryOrchestratorApplicationSecret  "GEEL)Fhnvast1F1M" -libraryOrchestratorApplicationScope  "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read"
-                    '''
-                 }*/
-                
+                 
                  UiPathPack (
                      outputPath: PROCESS_OUTPUT_PATH,
                      outputType: 'Process',
@@ -74,18 +72,14 @@ pipeline {
                  
              }
          }
-         /*
+
          stage('Deploy code') {
              when {
                 equals expected : 'True', actual: TestsRunSuccessfully
             }
              steps {
                  echo 'UiPathDeploy'
-                 
-                 powershell '''
-                 ./.pipeline/UiPathPack.ps1 "$env:WORKSPACE\\project.json" -destination_folder PROCESS_OUTPUT_PATH -autoVersion -outputType Process 
-                 '''
-                 
+                                 
                  
                  UiPathDeploy (
                     createProcess: true,
@@ -106,6 +100,7 @@ pipeline {
                 )
              }
          }
+        /*
          stage('Deploy assets') {
              when {
                 equals expected : 'True', actual: TestsRunSuccessfully
