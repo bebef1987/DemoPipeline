@@ -1,0 +1,217 @@
+pipeline {
+     agent any
+     environment {
+        RunTests = "True"
+        TestsRunSuccessfully = "True"
+    }
+     stages {
+         stage('Initialize the variables') {
+             steps{
+                 script{
+                     PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Process\\Output\\${BUILD_NUMBER}"
+                     TEST_OUTPUT_PATH = "${WORKSPACE}\\test-reports"
+                     ASSETS_FILE_PATH = "${WORKSPACE}\\assets.csv"
+                 }
+             }               
+         }
+         stage('Checkout code') {
+             steps {
+                 // Get some code from a GitHub repository
+                 git branch: 'main',
+                 credentialsId: 'gitCredentials',
+                 url: 'https://github.com/bebef1987/JenkinsPipeline'
+             }
+         }
+         /*
+         stage('Run Workflow Analyzer') {
+             steps {
+                 echo 'Workflow Analyzer'
+                 powershell(". '.UipathAnalize.ps1'") 
+             }
+         }
+         */
+
+         stage('Test code') {
+            when {
+                equals expected : 'True', actual: RunTests
+            }
+             steps {
+                 echo 'UiPathTest'
+                  /*UiPathTest(
+                     credentials: ExternalApp(
+                            accountForApp: 'myorggxpsdbv', 
+                            applicationId: '4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e', 
+                            applicationScope: 'OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read', 
+                            applicationSecret: 'Uipathkey', 
+                            identityUrl: 'https://cloud.uipath.com/'
+                            ), 
+                     folderName: 'Sales',
+                     orchestratorAddress: 'https://cloud.uipath.com/',
+                     orchestratorTenant: 'DefaultTenant',
+                     parametersFilePath: '',
+                     testResultsOutputPath: 'TEST_OUTPUT_PATH',
+                     testTarget: TestProject(
+                        environments: '', 
+                        testProjectPath: "${WORKSPACE}\\project.json"
+                        ),
+                     timeout: 500,
+                     traceLevel: 'Verbose'
+                 )
+                  */
+                  
+    
+                 powershell '''
+                 ./UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json"
+                 '''
+                 script {
+                     if (currentBuild.result == 'UNSTABLE'){
+                         currentBuild.result = 'FAILURE'
+                         TestsRunSuccessfully = 'False'
+                     }
+                 }
+             }
+         }
+         /*
+        stage('Build code for Process') {
+             steps {
+                 echo 'UiPathPack'
+                 echo PROCESS_OUTPUT_PATH
+                 UiPathPack (
+                     outputPath: PROCESS_OUTPUT_PATH,
+                     outputType: 'Process',
+                     projectJsonPath: "${WORKSPACE}",
+                     runWorkflowAnalysis: false,
+                     traceLevel: 'None',
+                     version: AutoVersion()
+                 )
+             }
+         }
+         stage('Deploy code') {
+             when {
+                equals expected : 'True', actual: TestsRunSuccessfully
+            }
+             steps {
+                 echo 'UiPathDeploy'
+                 UiPathDeploy (
+                    createProcess: true,
+                    credentials: ExternalApp(
+                            accountForApp: 'myorggxpsdbv', 
+                            applicationId: '4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e', 
+                            applicationScope: 'OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read', 
+                            applicationSecret: 'Uipathkey', 
+                            identityUrl: 'https://cloud.uipath.com/'), 
+                    folderName: 'Sales',
+                    orchestratorAddress: 'https://cloud.uipath.com/',
+                    orchestratorTenant: 'DefaultTenant',
+                    entryPointPaths: 'Main.xaml',
+                    environments: '',
+                  
+                    packagePath: PROCESS_OUTPUT_PATH,
+                    traceLevel: 'Verbose'
+                )
+             }
+         }
+         stage('Deploy assets') {
+             when {
+                equals expected : 'True', actual: TestsRunSuccessfully
+            }
+             steps {
+                 echo 'UiPathDeployAssets'
+                 UiPathAssets (
+                     assetsAction: DeployAssets(),
+                     credentials: Token(accountName: 'aitraining', credentialsId: 'userkeyOrch'),
+                     filePath: ASSETS_FILE_PATH,
+                     folderName: 'Sales',
+                    orchestratorAddress: 'https://cloud.uipath.com/myorggxpsdbv',
+                    orchestratorTenant: 'DefaultTenant',
+                     traceLevel: 'None'
+                )
+             }
+         } 
+         stage('Queue Configuration') {
+            when {
+                equals expected : 'True', actual: TestsRunSuccessfully
+            }
+             steps {
+                 echo 'Queue Configuration'
+                 powershell '''param(
+                                $AccountName="aitraining",
+                                $ClientId="8DEv1AMNXczW3y4U15LL3jYf62jK93n5",
+                                $TenantName="UiPathDefault",
+                                $ConfigFile = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\PipelineGateEmail\\ConfigurationCSV.csv",
+                                $OrcUserKey = "XgglQSRAy3XNPExMTBmALrP78QWuoN0JjM6CueoxQ3eB_",
+                                $CloudDeployment = "Cloud"
+                               )
+                            
+                            
+                            Write-Output "$(Get-Date -Format \'HH:mm:ss\') - STARTED - Queue Configuration"
+                            Write-Output $ConfigFile
+                            if (Get-Module | Where-Object {$_.Name -eq "UiPath.Powershell"}) 
+                            {
+                                write-host "UiPath.Pwershell Module is already imported."
+                            }
+                            else 
+                            {
+                                # If module is not imported, but available on disk then import
+                                if (Get-Module -ListAvailable | Where-Object {$_.Name -eq "UiPath.Powershell"}) {
+                                    Import-Module UiPath.Powershell
+                                }
+                                else {
+                                    Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+                                    Register-PSRepository -Name UiPath -SourceLocation https://www.myget.org/F/uipath-dev/api/v2
+                                    Install-Module -Repository UiPath -Name UiPath.Powershell -Force -Scope CurrentUser
+                                    Import-Module UiPath.PowerShell
+                                }
+                            }
+                            
+                            
+                            
+                            $authtoken = Get-UiPathAuthToken -Session -AccountName $AccountName -ClientId $ClientId -TenantName $TenantName -UserKey  $OrcUserKey -CloudDeployment $CloudDeployment
+                            
+                            $QueueList = Import-Csv $ConfigFile
+                            
+                            foreach ($Queue in $QueueList) {
+                                $QueueName = $Queue.QueueName
+                                $Description = $Queue.Description
+                                [bool]$EnforceUniqueRef = [bool]$Queue.EnforceUniqueRef
+                                [bool]$AutoRetry = [bool]$Queue.AutoRetry
+                                $MaxRetry = [int32]$Queue.MaxRetry
+                                $TimeOut = [int32]$Queue.TimeOut
+                                $FolderName = $Queue.FolderName
+                                
+                                Set-UiPathCurrentFolder -FolderPath $FolderName -AuthToken $authtoken
+                                
+                                 try
+                                {
+                                    if ($AutoRetry -and $EnforceUniqueRef)
+                                    {
+                                        Add-UiPathQueueDefinition -Name $QueueName -AcceptAutomaticallyRetry -AuthToken $authtoken -Description $QueueDescription  -EnforceUniqueReference -MaxNumberOfRetries $MaxRetry -RequestTimeout $TimeOut
+                                    }
+                                    elseif ( -not $AutoRetry -and -not $EnforceUniqueRef)
+                                    {
+                                        Add-UiPathQueueDefinition -Name $QueueName -AuthToken $authtoken -Description $QueueDescription -MaxNumberOfRetries $MaxRetry -RequestTimeout $TimeOut
+                                    }
+                                    elseif ( -not $AutoRetry -and  $EnforceUniqueRef)
+                                    {
+                                        Add-UiPathQueueDefinition -Name $QueueName -AuthToken $authtoken -Description $QueueDescription  -EnforceUniqueReference -MaxNumberOfRetries $MaxRetry -RequestTimeout $TimeOut
+                                    }
+                                    else
+                                    {
+                                        Add-UiPathQueueDefinition -Name $QueueName -AcceptAutomaticallyRetry -AuthToken $authtoken -Description $QueueDescription  -MaxNumberOfRetries $MaxRetry -RequestTimeout $TimeOut
+                                    }
+                                }
+                                catch 
+                                {
+                                    # skip exception if queue is already defined in orchestrator
+                                    if ( -not $PSItem.Exception.Message -contains "is already used" )
+                                    {
+                                        exit 1
+                                    }
+                                    Write-Output "Queue already defined"
+                                }
+                            }
+                            Write-Output "$(Get-Date -Format \'HH:mm:ss\') - COMPLETED - Queue Configuration"'''
+             }
+         } */  
+     }
+ }

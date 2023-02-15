@@ -1,0 +1,140 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_SearchTerm" Type="InArgument(x:String)" />
+    <x:Property Name="out_FirtResult" Type="OutArgument(x:String)" />
+  </x:Members>
+  <this:Main.in_SearchTerm>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_SearchTerm>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>924,1380.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="43">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="496,1316" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Browser Chrome: Learning RPA - Automation Courses | UiPath" sap:VirtualizedContainerService.HintSize="433.6,1204" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" ScopeGuid="c672271b-f123-4e54-8d9d-dffbcdf8b907" Version="V2">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="400,725.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <uix:NClick ClickType="Single" DisplayName="Click 'Courses'" sap:VirtualizedContainerService.HintSize="337.6,157.6" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="c672271b-f123-4e54-8d9d-dffbcdf8b907" Version="V3">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://academy.uipath.com/" ContentHash="3Qo7gm_qAEOMgzTk9xVTww" DesignTimeRectangle="330, 132, 58, 15" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'Courses'" FullSelectorArgument="&lt;webctrl aaname='Courses' parentid='topMenu' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='Courses' parentid='topMenu' tag='SPAN' type='' class='' check:innerText='COURSES' /&gt;" Guid="2b656b31-70c8-4751-a2d4-756e2211faf8" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAD4AAAATCAYAAADI876sAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAALcSURBVFhH7VVdS+NAFN2fH0pwkCCDhFIxYgopRfoQIQVr90G2S7NYMEhR0IcuVulDkDxUihzvfKSm049U9m3rCRcyd869M2dy5+YHdhTfwncN38J3DcvC38aIzz24+wyMzD0OET/P9KRGCSdpKX8r0Q6Bly5qgn/UxYSe7pHiKHNQq7cQ3Uw0WWCGcb+F2oHmuB7C/pi8hDyXaTJ3SazGovBsAJ9ZsCwL9qGHoO6CVcSYIbiZLnFY1UdwzGELToU415mkDOpq3r+WQ4WnCJx8Fo8wpifigmODnwYIGh64XMeC+1Ntfdzhcmxx2kfDp0MuzOe59jj8hojXdj5AWharsSA8adqSwNsj7SE8hHBEEled5krOX70RJ8QjDbcXzhE9GfOHF7ROPu+hp88bkwFCIa4zxGwhl4mSWO0qCH9EKE+mECAxQ5amSNOM3tZxpugdCz9D+PCPwuV8iqsjlcNpxBi9LixmcE2UxGoUhFMJi2T76qutxnpOUezXSz2g+6hieEdLyRKEVSZ90mzqA+cJ0vdCLsN4e4tYjYLwBIG8Zz7JW4f1nPhU+G00b78inHoJo+Zjq3eXro/RRqmYMoxuu2i5Sgg7G37mOggxlNWoLDM/7qpYjYJwKtcTsQGbNlzIkPXgi85YvcBoLSeGv0f+Ch0InerwTPUB71eBc9cCE5s9jWlglHreR/LSfU0QFZqVxDutkXM2lXpZrHYtNLd5k6o4CC5jxP0uArMEBUd28RWcvOHdNpXICifOAIN+iJr+E3i/xWGYdzzTPUIclvgzUC9xxJih1h5i/HyPq4Yj562THqa58H0f3b7Yg7Yb8WlKYsVyhEXhhOwugicDtZFAr31PW/vENpzJnwBcl/Ccc/moS3lDc2NNDMVdfIkRHKrKyc2uhrgXi+Rc0/IvuilWY0n4HO/T5TtjYhsO3bM0W7q52+ON4umPMi00pq2xIXa98P8c38J3DTsqHPgAodDkz2vjYpsAAAAASUVORK5CYII=" InformativeScreenshot="761dbd0cbbb4b0802032a2e1a8949240.png" Reference="D8wCyOLssEWDflO68N_H7A/3r_e7-n2cEGlRGeVRus9ew" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Learning RPA - Automation Courses | UiPath' /&gt;" SearchSteps="FuzzySelector, Image" Version="V1" Visibility="Interactive" />
+              </uix:NClick.Target>
+            </uix:NClick>
+            <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DelayAfter="3" DisplayName="Type Into 'INPUT'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="337.6,218.4" sap2010:WorkflowViewState.IdRef="NTypeInto_1" ScopeIdentifier="c672271b-f123-4e54-8d9d-dffbcdf8b907" Text="[in_SearchTerm+&quot;[k(enter)]&quot;]" Version="V3">
+              <uix:NTypeInto.Target>
+                <uix:TargetAnchorable BrowserURL="https://academy.uipath.com/courses" ContentHash="5V7t7Nz73UmLdd13ojRAjQ" DesignTimeRectangle="37, 384, 271, 40" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='text' class='ng-untouched ng-pristine ng-valid' aaname='' /&gt;" Guid="6a59f343-e9da-4acb-8b32-739a66247c7d" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAARMAAAAsCAYAAABG8lx0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAU7SURBVHhe7drtT1pXHAfw/am+IVmaLE2WLUt906y+WZaYJX1DutatUpVqAZ8YisBUtNq0zoepRIs8OORBWny+gPjw2/0dzkWggFJOumR8P8kJcO49R3xxvv7OuX5FAAAKIEwAQIlSmIRCITQ0NLSmm6EiTAAAmoEwAQAlECYAoATCBACUQJgAgBIIEwBQAmECAEogTABACYQJACiBMAEAJRAmAKAEwgSgneU00k64FWTH50OYALQhLewl8wMTdXR03LSvO8nsiZJ2KW9qEsIEoM0cvTXT/fIQqWqmn72U/oxAURYm19fXlM1maW8vTicnp+Lzf+nq6opyuZx4BQApNUFdMjTuP/ZS8Ej2XxYovdhD35uK1zpH4/LC3SkJE03TyOn8gyyWFzQ4OCRe7XYHHR0Z3/TL+/gxI74LvwJAUaC3uLUxdS9SrdWp6VWLicPGZKalnOy8o5bDhP/yz876af71Al1eFmsj7lteWaGpKU+p70tDmABUC5L1G648TGTZkF2fKLsnILvuqOUwKRQKND7upFgsJnuKzs/PKZFIlMKEtz2pVIqmp2do3Omk7e33FUHD77lvctItWjgcKW1R+Gesrq5ROv2BFt+8Ib9/ji4uLhrOaYRJLLYnxjgcw/ocq2IcQHsKkEVscbrI+0F2fSJN3kfFrU79wKlNWWXi9frEGUU9gUCAhl7ZxIIPhcM0Nj4uxvF4DgAePzo6Rru7/1A0ukuv9Hs3NzfFWD6LsTscYuvEocIBwuN4zv7+Af2+AEUiEXK5Jktzcpj09fXTiD6n8TN5fq6gjJACaC9xGvvhlsrk0qhM7pF1R/bdUcthwnix+3zT9KznN3IMj9D6+oboM2SzOREeqdS+7Lnp42qDK4zj42PK5/Pyqv4d9MXPFQpXEjzX4NAQ7ezc/HY8fnhklOLxm4Mivm9lZZXOzs5EmAwMWCmZTMmrRPv7aRFK5d8NoJ0EB+6JqqPj0UTNJzZpT5c8M7FQoMkTCiVhYuDtSDQapUm3m573Wmhra0sEBS9im90uwoCrDm6hUFhUGhwajO/jRc7bJQ4EPtB1TUxWhEn5Vorn5DAqD6Bytc5M+D1XKggTaFtHi9Qtn9iYfrTSWkKjgh4aBS1OawMPi0GiVy5dvrQccHdKw6RcJBIVW5XT01PxuLhfrxLm5udpYWGhovE1DqEpj0fc45+bEyG0oW9xGoUJj+Mw4bOZWhAmALVp21Z6KAOlfjPRT00GSsthcqpvKfjJTfUC5cfCXI0cHByIxgegHCy1JBJJsWXhrYuBK5ZGYcLzc2VzeHgoe4rVDVcqxpkJwgSgjswa2X7plJVIsZkedJNtJUqzj43/jG0uUFoOE/E0x+mkWb9fvGf5/Ln4bIQBL+6ZmZmKx8fptL71sdkpk8mIRc5hY/xfCi92l2uiYZhUz8lB8j4YLIXSbWHC4/9eX6cd/XflsdWf+XdZWvqL4omEHA3w/1TQiludEi1Alu+aD5SWw4Tx4Smfcfz69Bk9efJUvHIYcNVi4AVsHNL+/rxXnqlslxYyL1y+ZnnRJ7Y7y8vLDcOEcb/bPSXG9ejN+nKQksmkuHZbmBgh6PP9KcKo+jNXUS/18W/fvZOjAdpIeaB8a6Oo7G5ESZgYjIVvVB+18D38CJlDpBqPq3etEZ6TtzfNjgOABrSgvhUy0+LNA9GGlIYJALQvhAkAKIEwAQAlECYAoATCBACUQJgAgBIIEwBQAmECAEogTABACYQJACiBMAEAJRAmAKBE3TBBQ0NDa7YZSmECANAKhAkAKED0L27+RmJo/zSvAAAAAElFTkSuQmCC" InformativeScreenshot="fe147a4896329f4e353638daaed09b2c.png" Reference="D8wCyOLssEWDflO68N_H7A/1tEOGV0e40eJLdh-yh_PIA" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Robotic Process Automation Courses | UiPath Academy' /&gt;" SearchSteps="FuzzySelector, Image" Version="V1" Visibility="Interactive" />
+              </uix:NTypeInto.Target>
+            </uix:NTypeInto>
+            <uix:NGetText DisplayName="Get Text '6 Results'" sap:VirtualizedContainerService.HintSize="337.6,157.6" sap2010:WorkflowViewState.IdRef="NGetText_1" ScopeIdentifier="c672271b-f123-4e54-8d9d-dffbcdf8b907" TextString="[out_FirtResult]" Version="V3">
+              <uix:NGetText.Target>
+                <uix:TargetAnchorable BrowserURL="https://academy.uipath.com/courses" ContentHash="ivRyIeuqSU2mjRYpULfFHg" DesignTimeRectangle="352, 497, 224, 25" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'6 Results'" FullSelectorArgument="&lt;webctrl tag='CR-CONTENT-GRID' idx='1' /&gt;&lt;webctrl aaname='*' isleaf='1' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='CR-CONTENT-GRID' /&gt;&lt;webctrl aaname='*' isleaf='1' tag='A' type='' class='' check:text='Mobile Device Automation with UiPath Test Suite' /&gt;" Guid="072d3aa5-79b9-4e63-b6e8-aa989b0facc2" ImageBase64="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" InformativeScreenshot="42b9dd9366ab7cff4ec526f1c66196f6.png" Reference="D8wCyOLssEWDflO68N_H7A/GMgynCd2vEKmvEYAEoLhDQ" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Robotic Process Automation Courses | UiPath Academy' /&gt;" SearchSteps="Selector" Version="V1" Visibility="Interactive" />
+              </uix:NGetText.Target>
+            </uix:NGetText>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="0, 0, 0, 0" BrowserType="Chrome" ContentHash="tgklKVG_IEO_XnYJ1nr54w" IconBase64="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" InformativeScreenshot="f18e71d839d785caceb02e64ab55da56.jpg" Reference="D8wCyOLssEWDflO68N_H7A/-9xFvxizlUm-Ndq5svnAoA" Selector="&lt;html app='chrome.exe' title='Learning RPA - Automation Courses | UiPath' /&gt;" Title="Learning RPA - Automation Courses | UiPath" Url="https://academy.uipath.com/" />
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+  </Sequence>
+</Activity>
