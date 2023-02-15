@@ -30,7 +30,7 @@ pipeline {
                  powershell(". '.UipathAnalize.ps1'") 
              }
          }
-         */
+         
 
          stage('Test code') {
             when {
@@ -43,6 +43,7 @@ pipeline {
                  powershell '''
                  ./.pipeline/UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json" -out junit
                  '''
+                 junit 'TEST_OUTPUT_PATH/*.xml'
                  script {
                      if (currentBuild.result == 'UNSTABLE'){
                          currentBuild.result = 'FAILURE'
@@ -51,11 +52,17 @@ pipeline {
                  }
              }
          }
-         /*
+         */
         stage('Build code for Process') {
              steps {
                  echo 'UiPathPack'
                  echo PROCESS_OUTPUT_PATH
+                  /*withEnv(["PROCESS_OUTPUT_PATH=$PROCESS_OUTPUT_PATH"]) {
+                     powershell '''
+                     ./.pipeline/UiPathPack.ps1 "$env:WORKSPACE\\project.json" -destination_folder $env:PROCESS_OUTPUT_PATH -autoVersion -outputType Process -libraryOrchestratorAccountForApp myorggxpsdbv -libraryOrchestratorApplicationId  4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -libraryOrchestratorApplicationSecret  "GEEL)Fhnvast1F1M" -libraryOrchestratorApplicationScope  "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read"
+                    '''
+                 }*/
+                
                  UiPathPack (
                      outputPath: PROCESS_OUTPUT_PATH,
                      outputType: 'Process',
@@ -64,14 +71,22 @@ pipeline {
                      traceLevel: 'None',
                      version: AutoVersion()
                  )
+                 
              }
          }
+         /*
          stage('Deploy code') {
              when {
                 equals expected : 'True', actual: TestsRunSuccessfully
             }
              steps {
                  echo 'UiPathDeploy'
+                 
+                 powershell '''
+                 ./.pipeline/UiPathPack.ps1 "$env:WORKSPACE\\project.json" -destination_folder PROCESS_OUTPUT_PATH -autoVersion -outputType Process 
+                 '''
+                 
+                 
                  UiPathDeploy (
                     createProcess: true,
                     credentials: ExternalApp(
