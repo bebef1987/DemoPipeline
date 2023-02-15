@@ -14,6 +14,7 @@ pipeline {
                  }
              }               
          }
+         /*
          stage('Checkout code') {
              steps {
                  // Get some code from a GitHub repository
@@ -22,7 +23,7 @@ pipeline {
                  url: 'https://github.com/bebef1987/JenkinsPipeline'
              }
          }
-         /*
+
          stage('Run Workflow Analyzer') {
              steps {
                  echo 'Workflow Analyzer'
@@ -37,31 +38,10 @@ pipeline {
             }
              steps {
                  echo 'UiPathTest'
-                  /*UiPathTest(
-                     credentials: ExternalApp(
-                            accountForApp: 'myorggxpsdbv', 
-                            applicationId: '4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e', 
-                            applicationScope: 'OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read', 
-                            applicationSecret: 'Uipathkey', 
-                            identityUrl: 'https://cloud.uipath.com/'
-                            ), 
-                     folderName: 'Sales',
-                     orchestratorAddress: 'https://cloud.uipath.com/',
-                     orchestratorTenant: 'DefaultTenant',
-                     parametersFilePath: '',
-                     testResultsOutputPath: 'TEST_OUTPUT_PATH',
-                     testTarget: TestProject(
-                        environments: '', 
-                        testProjectPath: "${WORKSPACE}\\project.json"
-                        ),
-                     timeout: 500,
-                     traceLevel: 'Verbose'
-                 )
-                  */
-                  
+               
     
                  powershell '''
-                 ./UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json"
+                 ./.pipeline/UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json" -out junit
                  '''
                  script {
                      if (currentBuild.result == 'UNSTABLE'){
