@@ -131,9 +131,10 @@ function WriteLog
 	}
 }
 #Running Path
-$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptPathOld = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptPath = "C:"
 #log file
-$debugLog = "$scriptPath\orchestrator-test-run.log"
+$debugLog = "$scriptPathOld\\orchestrator-test-run.log"
 
 WriteLog "Project path is: '$project_path'"
 
