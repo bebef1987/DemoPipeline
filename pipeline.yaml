@@ -15,6 +15,9 @@ pipeline {
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\Process\\"
                      TEST_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\test-reports"
                  }
+                 dir('$TEST_OUTPUT_PATH') {
+   sh 'pwd -P'
+}
              }               
          }
          
