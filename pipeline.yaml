@@ -14,11 +14,7 @@ pipeline {
                  script{
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\Process\\"
                      TEST_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\test-reports"
-                 }
-                 dir('$TEST_OUTPUT_PATH') {
-   sh 'pwd -P'
-}
-             }               
+                 }   
          }
          
          stage('Workflow analizator') {
@@ -26,7 +22,7 @@ pipeline {
          echo 'Workflow analizator'
          withEnv(["TEST_OUTPUT_PATH=$TEST_OUTPUT_PATH"]) {  
             powershell '''
-                ./.pipeline/Static-Code-AnalyzerPipelineOutput.ps1 -ProjectFilePath "$env:WORKSPACE"  -ExecutableFilePath "C:\\Program Files\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe" -OutputFilePath "$env:WORKSPACE\\Workflow-Analysis.json"
+                ./.pipeline/Static-Code-AnalyzerPipelineOutput.ps1 -ProjectFilePath "$env:WORKSPACE\project.json"  -ExecutableFilePath "C:\Program Files\UiPath\Studio\UiPath.Studio.CommandLine.exe" -OutputFilePath "$env:WORKSPACE\\Workflow-Analysis.json"
             '''
             }
          }
