@@ -12,11 +12,12 @@ param(
 					Write-Output "OutputFilePath  $OutputFilePath"
 
 
-
-
-
-                    $Command = "`"$ExecutableFilePath`" analyze -p `'$ProjectFilePath`'"
-                    Invoke-Expression $Command | Out-File -FilePath $OutputFilePath
+                    $Command = "$ExecutableFilePath"
+					$argumentList = "analyze -p `'$ProjectFilePath`'"
+					
+					Write-Output "Command  $Command $argumentList"
+					
+                    Invoke-Expression "& `"$Command`" $argumentList"| Out-File -FilePath $OutputFilePath
                     $rp = Get-Content $OutputFilePath | foreach {$_.replace("#json","")}
                     
                     Set-Content -Path $OutputFilePath -Value $rp
