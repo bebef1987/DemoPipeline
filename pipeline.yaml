@@ -7,6 +7,10 @@ pipeline {
      stages {
          stage('Initialize the variables') {
              steps{
+                 echo 'Clean WorkSpace'
+                 cleanWs()
+                 
+                 echo 'Setup vars'
                  script{
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Process\\Output\\${BUILD_NUMBER}"
                      TEST_OUTPUT_PATH = "${WORKSPACE}\\test-reports"
@@ -207,6 +211,7 @@ pipeline {
      
      post { 
         always { 
+            echo 'Clean WorkSpace'
             cleanWs()
         }
     }
