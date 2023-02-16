@@ -14,10 +14,24 @@ pipeline {
                  script{
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\Process\\"
                      TEST_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\test-reports"
-                     ASSETS_FILE_PATH = "${WORKSPACE}\\assets.csv"
                  }
              }               
          }
+         
+         stage('Workflow analizator') {
+         steps {
+         echo 'Workflow analizator'
+         withEnv(["TEST_OUTPUT_PATH=$TEST_OUTPUT_PATH"]) {  
+            powershell '''
+                ./.pipeline/Static-Code-AnalyzerPipelineOutput.ps1 -ProjectFilePath "$env:WORKSPACE\\project.json"  -ExecutableFilePath "C:\\Program Files\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe" -OutputFilePath $env:TEST_OUTPUT_PATH
+            '''
+            }
+         }
+            
+         }
+         
+         
+         
          
          stage('Test code') {
             when {
@@ -33,7 +47,6 @@ pipeline {
                  }
 
                  // Read test results
-
                  junit 'Output/${BUILD_NUMBER}/test-reports/*.xml'
                  
                  
@@ -73,7 +86,6 @@ pipeline {
              steps {
                  echo 'UiPathDeploy'
                                  
-                 
                  UiPathDeploy (
                     createProcess: false,
                     credentials: ExternalApp(
