@@ -1,5 +1,5 @@
 {
-  "name": "AcademyTest_Tests",
+  "name": "AcademyProcess",
   "description": "Blank Process",
   "main": "SearchForCourse.xaml",
   "dependencies": {
@@ -21,7 +21,6 @@
     "isAttended": false,
     "requiresUserInteraction": true,
     "supportsPersistence": false,
-    "workflowSerialization": "DataContract",
     "excludedLoggedData": [
       "Private:*",
       "*password*"
@@ -75,6 +74,12 @@
     {
       "filePath": "SearchTestCase.xaml",
       "uniqueId": "9fe06867-b9d6-4ffa-a291-458275df059c",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "SearchForCourse.xaml",
+      "uniqueId": "a939a14e-b10d-4a58-b390-0c036711de73",
       "input": [],
       "output": []
     }
