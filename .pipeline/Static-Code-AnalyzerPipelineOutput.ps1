@@ -15,7 +15,7 @@ param(
 
 
 
-                    $Command = "$ExecutableFilePath analyze -p `'$ProjectFilePath`'"
+                    $Command = "`'$ExecutableFilePath`' analyze -p `'$ProjectFilePath`'"
                     Invoke-Expression $Command | Out-File -FilePath $OutputFilePath
                     $rp = Get-Content $OutputFilePath | foreach {$_.replace("#json","")}
                     
