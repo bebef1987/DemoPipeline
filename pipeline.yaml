@@ -26,7 +26,7 @@ pipeline {
          echo 'Workflow analizator'
          withEnv(["TEST_OUTPUT_PATH=$TEST_OUTPUT_PATH"]) {  
             powershell '''
-                ./.pipeline/Static-Code-AnalyzerPipelineOutput.ps1 -ProjectFilePath "$env:WORKSPACE\\project.json"  -ExecutableFilePath "C:\\Program Files\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe" -OutputFilePath "$env:TEST_OUTPUT_PATH\\Workflow-Analysis.json"
+                ./.pipeline/Static-Code-AnalyzerPipelineOutput.ps1 -ProjectFilePath "$env:WORKSPACE"  -ExecutableFilePath "C:\\Program Files\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe" -OutputFilePath "$env:TEST_OUTPUT_PATH\\Workflow-Analysis.json"
             '''
             }
          }
