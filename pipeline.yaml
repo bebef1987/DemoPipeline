@@ -34,7 +34,7 @@ pipeline {
 
                  // Read test results
 
-                 junit 'TEST_OUTPUT_PATH/*.xml'
+                 junit 'Output/${BUILD_NUMBER}/test-reports/*.xml'
                  
                  
                  script {
