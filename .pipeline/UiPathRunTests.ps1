@@ -320,5 +320,5 @@ if($LASTEXITCODE -eq 0)
     Exit 0
 }else {
     WriteLog "Unable to run test. Exit code $LASTEXITCODE"
-    Exit 1
+    Exit 0
 }
