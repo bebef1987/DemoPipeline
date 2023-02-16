@@ -8,7 +8,7 @@ pipeline {
          stage('Initialize the variables') {
              steps{
                  echo 'Clean WorkSpace'
-                 cleanWs()
+                 //cleanWs()
                  
                  echo 'Setup vars'
                  script{
