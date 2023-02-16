@@ -13,7 +13,7 @@ pipeline {
                  echo 'Setup vars'
                  script{
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\${BUILD_NUMBER}\\Process\\Output\\${BUILD_NUMBER}"
-                     TEST_OUTPUT_PATH = ""${WORKSPACE}\\${BUILD_NUMBER}\\test-reports"
+                     TEST_OUTPUT_PATH = "${WORKSPACE}\\${BUILD_NUMBER}\\test-reports"
                      ASSETS_FILE_PATH = "${WORKSPACE}\\assets.csv"
                  }
              }               
@@ -26,10 +26,11 @@ pipeline {
              steps {
                  echo 'UiPathTest'
                
-    
-                 ignoreEx = powershell '''
-                 ./.pipeline/UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json" -out junit
+                  withEnv(['TEST_OUTPUT_PATH=$TEST_OUTPUT_PATH']) {  
+                     ignoreEx = powershell '''
+                     ./.pipeline/UiPathRunTests.ps1 -orchestrator_url https://cloud.uipath.com/ -orchestrator_tenant DefaultTenant -accountForApp myorggxpsdbv -applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e -applicationSecret "GEEL)Fhnvast1F1M" -applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -folder_organization_unit Sales -result_path $env:TEST_OUTPUT_PATH -project_path "$env:WORKSPACE\\project.json" -out junit
                  '''
+                 }
                  
                  // Read test results
                  junit 'TEST_OUTPUT_PATH/*.xml'
