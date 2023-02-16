@@ -14,7 +14,8 @@ pipeline {
                  script{
                      PROCESS_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\Process\\"
                      TEST_OUTPUT_PATH = "${WORKSPACE}\\Output\\${BUILD_NUMBER}\\test-reports"
-                 }   
+                 }
+         }
          }
          
          stage('Workflow analizator') {
