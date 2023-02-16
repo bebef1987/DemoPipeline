@@ -34,12 +34,10 @@ pipeline {
                  
                  
                  
-                 echo "Read Junit results from: ${TEST_OUTPUT_PATH}\\*.xml"
+                 echo "Read Junit results from: ${TEST_OUTPUT_PATH}/*.xml"
                  // Read test results
-                 script{
-                 test_results_path = "${TEST_OUTPUT_PATH}\\*.xml"
-                 }
-                 junit test_results_path
+   
+                 junit "${TEST_OUTPUT_PATH}/*.xml"
                  
                  
                  script {
