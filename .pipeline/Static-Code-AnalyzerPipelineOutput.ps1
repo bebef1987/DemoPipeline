@@ -8,6 +8,12 @@ param(
                 
                 
                     Write-Output "$(Get-Date -Format 'HH:mm:ss') - STARTED - Static Code Analyzer"
+					Write-Output "ProjectFilePath  $ProjectFilePath"
+					Write-Output "OutputFilePath  $OutputFilePath"
+
+
+
+
 
                     $Command = "$ExecutableFilePath analyze -p `'$ProjectFilePath`'"
                     Invoke-Expression $Command | Out-File -FilePath $OutputFilePath
